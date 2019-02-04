@@ -15,6 +15,8 @@ public class DetailScreenActivity extends AppCompatActivity {
 
 
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +39,9 @@ public class DetailScreenActivity extends AppCompatActivity {
 
 
     public void setup(){
+
+
+
         inputP.setText("P = "+100000);
         inputR.setText("r = "+0.005+"\r\n"+"(You use"+" monthly "+"interest rate, so result: "+0.06+" / "+12+" = "+0.005+" )");
         inputN.setText("n = "+180+"\r\n"+"("+12+" months * "+15 +" years "+" = "+180+" )");
