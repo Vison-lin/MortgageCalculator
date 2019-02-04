@@ -1,6 +1,8 @@
 package uOttawa.FredAndVison.mortgagecalculator;
 
-public class ObjectDto {
+import java.io.Serializable;
+
+public class ObjectDto implements Serializable {
 
     private String userName;
 

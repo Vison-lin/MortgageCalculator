@@ -1,5 +1,7 @@
 package uOttawa.FredAndVison.mortgagecalculator;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -29,11 +31,13 @@ public class MainActivity extends AppCompatActivity {
     private EditText amortizationPeriod;
     private Button confirm;
     private Button calculateBtn;
+    private Button detailButton;
     private LinearLayout summaryInfo;
     private TextView result;
     private boolean isAppHeadVisible;
     private ObjectDto objectDto;
     private boolean isUserNameSetted = false;
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,12 +60,14 @@ public class MainActivity extends AppCompatActivity {
         this.amortizationPeriod = findViewById(R.id.amortizationPeriod);
         this.confirm = findViewById(R.id.confirm);
         this.calculateBtn = findViewById(R.id.calculateBtn);
+        this.detailButton = findViewById(R.id.detailButton);
         this.summaryInfo = findViewById(R.id.summaryInfo);
         this.summaryInfo.setVisibility(View.INVISIBLE);
         this.result = findViewById(R.id.result);
         this.isAppHeadVisible = true;
         this.settingPage.setVisibility(View.INVISIBLE);
         objectDto = new ObjectDto();
+        this.context = this;
         registerSettingPageBtn();
         registerCurrencySelectionBtns();
         registerPaymentFrequencyBtns();
@@ -220,6 +226,20 @@ public class MainActivity extends AppCompatActivity {
                     calculateAndDisplay();
                     summaryInfo.setVisibility(View.VISIBLE);
                 }
+            }
+        });
+    }
+
+    private void registerDetailButton(){
+        detailButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context,DetailScreenActivity.class);
+                intent.putExtra("Infor",objectDto);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                context.startActivity(intent);
+
+
             }
         });
     }
