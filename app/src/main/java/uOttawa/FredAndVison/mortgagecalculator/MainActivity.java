@@ -30,13 +30,15 @@ public class MainActivity extends AppCompatActivity {
     private EditText interestRate;
     private EditText amortizationPeriod;
     private Button confirm;
-    private Button calculateBtn;
     private Button detailButton;
+    String currency;
     private LinearLayout summaryInfo;
     private TextView result;
     private boolean isAppHeadVisible;
+    //    private Button confirm;
+    private Button calculateBtn;
     private ObjectDto objectDto;
-    private boolean isUserNameSetted = false;
+//    private boolean isUserNameSetted = false;
     private Context context;
 
     @Override
@@ -48,6 +50,12 @@ public class MainActivity extends AppCompatActivity {
         this.appHead = findViewById(R.id.appHead);
         this.settingPage = findViewById(R.id.settingPage);
         this.userName = findViewById(R.id.userName);
+        this.userName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                summaryInfo.setVisibility(View.INVISIBLE);
+            }
+        });
         this.currencySign = findViewById(R.id.currencySign);
         this.dollar = findViewById(R.id.dollar);
         this.euro = findViewById(R.id.euro);
@@ -58,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
         this.principalAmount = findViewById(R.id.principalAmount);
         this.interestRate = findViewById(R.id.interestRate);
         this.amortizationPeriod = findViewById(R.id.amortizationPeriod);
-        this.confirm = findViewById(R.id.confirm);
+//        this.confirm = findViewById(R.id.confirm);
         this.calculateBtn = findViewById(R.id.calculateBtn);
         this.detailButton = findViewById(R.id.detailButton);
         this.summaryInfo = findViewById(R.id.summaryInfo);
@@ -72,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
         registerCurrencySelectionBtns();
         registerPaymentFrequencyBtns();
         registerCalculateBtn();
+        registerDetailButton();
     }
 
     private void registerPaymentFrequencyBtns() {
@@ -80,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 objectDto.setPaymentFrequency(PaymentFrequency.Biweekly);
                 Toast.makeText(getApplicationContext(), "Changed the payment frequency to bi-weekly", Toast.LENGTH_SHORT).show();
+                summaryInfo.setVisibility(View.INVISIBLE);
             }
         });
         weekly.setOnClickListener(new View.OnClickListener() {
@@ -87,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 objectDto.setPaymentFrequency(PaymentFrequency.Weekly);
                 Toast.makeText(getApplicationContext(), "Changed the payment frequency to weekly", Toast.LENGTH_SHORT).show();
+                summaryInfo.setVisibility(View.INVISIBLE);
             }
         });
         monthly.setOnClickListener(new View.OnClickListener() {
@@ -94,6 +105,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 objectDto.setPaymentFrequency(PaymentFrequency.Monthly);
                 Toast.makeText(getApplicationContext(), "Changed the payment frequency to monthly", Toast.LENGTH_SHORT).show();
+                summaryInfo.setVisibility(View.INVISIBLE);
             }
         });
     }
@@ -119,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
         registerDollar();
         registerEuro();
         registerPound();
-        registerSettingConfirmBtn();
+//        registerSettingConfirmBtn();
         registerForClosingSettingWhileClickingAnywhereOutsideFoSetting();
     }
 
@@ -130,6 +142,8 @@ public class MainActivity extends AppCompatActivity {
                 objectDto.setSelectedCurrencyType(CurrencyType.DOLLAR);
                 Toast.makeText(getApplicationContext(), "Changed the currency to Dollar", Toast.LENGTH_SHORT).show();
                 currencySign.setText("$");
+                currency = "$";summaryInfo.setVisibility(View.INVISIBLE);
+//                calculateAndDisplay();
             }
         });
     }
@@ -141,6 +155,8 @@ public class MainActivity extends AppCompatActivity {
                 objectDto.setSelectedCurrencyType(CurrencyType.EURO);
                 Toast.makeText(getApplicationContext(), "Changed the currency to Euro", Toast.LENGTH_SHORT).show();
                 currencySign.setText("€");
+                currency = "€";summaryInfo.setVisibility(View.INVISIBLE);
+//                calculateAndDisplay();
             }
         });
     }
@@ -152,29 +168,31 @@ public class MainActivity extends AppCompatActivity {
                 objectDto.setSelectedCurrencyType(CurrencyType.POUND);
                 Toast.makeText(getApplicationContext(), "Changed the currency to Pound", Toast.LENGTH_SHORT).show();
                 currencySign.setText("£");
+                currency = "£";summaryInfo.setVisibility(View.INVISIBLE);
+//                calculateAndDisplay();
             }
         });
     }
 
-    private void registerSettingConfirmBtn() {
-        confirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String mUserName = userName.getText().toString();
-                if (mUserName.length() < 1) {
-                    userName.setError("Please enter your name here :)");
-                    isUserNameSetted = false;
-                } else {
-                    isUserNameSetted = true;
-                    objectDto.setUserName(mUserName);
-                    appHead.setVisibility(View.VISIBLE);
-                    settingPage.setVisibility(View.INVISIBLE);
-                    isAppHeadVisible = true;
-                    Toast.makeText(getApplicationContext(), "Setting saved", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-    }
+//    private void registerSettingConfirmBtn() {
+//        confirm.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                String mUserName = userName.getText().toString();
+//                if (mUserName.length() < 1) {
+//                    userName.setError("Please enter your name here :)");
+//                    isUserNameSetted = false;
+//                } else {
+//                    isUserNameSetted = true;
+//                    objectDto.setUserName(mUserName);
+//                    appHead.setVisibility(View.VISIBLE);
+//                    settingPage.setVisibility(View.INVISIBLE);
+//                    isAppHeadVisible = true;
+//                    Toast.makeText(getApplicationContext(), "Setting saved", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        });
+//    }
 
     private void registerCalculateBtn() {
         calculateBtn.setOnClickListener(new View.OnClickListener() {
@@ -211,15 +229,16 @@ public class MainActivity extends AppCompatActivity {
                     hasError = true;
                 }
 
-                if (userName.getText().toString().length() < 1) {
-                    appHead.setVisibility(View.INVISIBLE);
-                    settingPage.setVisibility(View.VISIBLE);
-                    isAppHeadVisible = false;
-                    hasError = true;
-                    userName.setError("Please enter your name here :)");
-                }
+//                if (userName.getText().toString().length() < 1) {
+//                    appHead.setVisibility(View.INVISIBLE);
+//                    settingPage.setVisibility(View.VISIBLE);
+//                    isAppHeadVisible = false;
+//                    hasError = true;
+//                    userName.setError("Please enter your name here :)");
+//                }
 
-                if (hasError || !isUserNameSetted) {
+//                if (hasError || !isUserNameSetted) {
+                if (hasError) {
                     summaryInfo.setVisibility(View.INVISIBLE);
                     Toast.makeText(getApplicationContext(), "You entered invalid input. Please check all the fields in red", Toast.LENGTH_SHORT).show();
                 } else {
@@ -259,7 +278,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void calculateAndDisplay() {
-        String currency;
+
         if (objectDto.getSelectedCurrencyType() == CurrencyType.DOLLAR) {
             currency = "$";
         } else if (objectDto.getSelectedCurrencyType() == CurrencyType.EURO) {
@@ -269,8 +288,37 @@ public class MainActivity extends AppCompatActivity {
         } else {
             throw new IllegalStateException();
         }
-        String display = userName.getText().toString() + ", you should make " + objectDto.getPaymentFrequency() + " payments for: " + currency + " " + 10000;
+        String mUserName;
+        if (userName.getText().toString().length() < 1) {
+            mUserName = "Hi";
+        } else {
+            mUserName = userName.getText().toString();
+        }
+        String display = mUserName + ", after calculated, you should make " + objectDto.getPaymentFrequency() + " payments for: " + currency + " " + Math.round(calculateResult() * 100) / 100.0;
         result.setText(display);
+    }
+
+    private double calculateResult() {
+        double p = Double.valueOf(principalAmount.getText().toString());
+        System.out.println(p);
+        double r = Double.valueOf(interestRate.getText().toString()) * 0.01;
+        double n = Integer.valueOf(amortizationPeriod.getText().toString());
+        if (objectDto.getPaymentFrequency() == PaymentFrequency.Monthly) {
+            r = r/12;
+            n = n * 12;
+        } else if (objectDto.getPaymentFrequency() == PaymentFrequency.Weekly) {
+            r = r/12/4;
+            n = n * 12 * 4;
+        } else if (objectDto.getPaymentFrequency() == PaymentFrequency.Biweekly) {
+            r = r/12/4/2;
+            n = n * 12 * 4 * 2;
+        }
+        System.out.println(r);
+
+        System.out.println(n);
+        double reuslt = p * ((r * Math.pow((1 + r), n)) / (Math.pow((1 + r), n) - 1));
+        objectDto.setResult(reuslt);
+        return  reuslt;
     }
 
 }

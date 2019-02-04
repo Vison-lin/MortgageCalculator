@@ -42,15 +42,23 @@ public class DetailScreenActivity extends AppCompatActivity {
 
     public void setup(){
        int day = 0;
+       String period = "";
        if(infor.getPaymentFrequency()==PaymentFrequency.Biweekly){
+           day = 12*4*2;
+           period = " Bi-weekly ";
+       }else if(infor.getPaymentFrequency() ==PaymentFrequency.Monthly){
+           day = 12;
+           period = " Monthly ";
+       }else if(infor.getPaymentFrequency()== PaymentFrequency.Weekly){
            day = 12*4;
+           period = " Weekly ";
        }
 
 
         inputP.setText("P = "+infor.getPrincipleAmount());
-        inputR.setText("r = "+0.005+"\r\n"+"(You use"+" monthly "+"interest rate, so result: "+0.06+" / "+12+" = "+0.005+" )");
-        inputN.setText("n = "+180+"\r\n"+"("+12+" months * "+15 +" years "+" = "+180+" )");
-        result.setText("Finally, M = "+1);
+        inputR.setText("r = "+(infor.getInterestRate()/day)+"\r\n"+"(You use"+period+"interest rate, so result: "+infor.getInterestRate()+" / "+day+" = "+(infor.getInterestRate()/day)+" )");
+        inputN.setText("n = "+day*infor.getPeriod()+"\r\n"+"("+day+" months * "+infor.getPeriod() +" years "+" = "+day*infor.getPeriod()+" )");
+        result.setText("Finally, M = "+infor.getResult());
 
 
 
