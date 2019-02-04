@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">MortgageCalculator</string>
+    <string name="intro">The mortgage payment is calculated using the following formula:</string>
 </resources>
