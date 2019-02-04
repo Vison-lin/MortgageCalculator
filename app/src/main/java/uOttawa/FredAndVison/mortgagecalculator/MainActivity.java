@@ -45,6 +45,12 @@ public class MainActivity extends AppCompatActivity {
         this.appHead = findViewById(R.id.appHead);
         this.settingPage = findViewById(R.id.settingPage);
         this.userName = findViewById(R.id.userName);
+        this.userName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                summaryInfo.setVisibility(View.INVISIBLE);
+            }
+        });
         this.currencySign = findViewById(R.id.currencySign);
         this.dollar = findViewById(R.id.dollar);
         this.euro = findViewById(R.id.euro);
@@ -126,6 +132,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Changed the currency to Dollar", Toast.LENGTH_SHORT).show();
                 currencySign.setText("$");
                 currency = "$";
+                summaryInfo.setVisibility(View.INVISIBLE);
 //                calculateAndDisplay();
             }
         });
@@ -139,6 +146,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Changed the currency to Euro", Toast.LENGTH_SHORT).show();
                 currencySign.setText("€");
                 currency = "€";
+                summaryInfo.setVisibility(View.INVISIBLE);
 //                calculateAndDisplay();
             }
         });
@@ -152,6 +160,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Changed the currency to Pound", Toast.LENGTH_SHORT).show();
                 currencySign.setText("£");
                 currency = "£";
+                summaryInfo.setVisibility(View.INVISIBLE);
 //                calculateAndDisplay();
             }
         });
